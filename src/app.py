@@ -7,6 +7,9 @@ import streamlit as st
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
+import subprocess
+
+from src.config import DB_PATH
 from src.analytics import (
     get_category_kpis,
     get_business_insights,
@@ -27,6 +30,29 @@ st.set_page_config(
     page_icon="📊",
     layout="wide",
 )
+
+
+# ---------------------------------------------------------------------
+# First-run warehouse bootstrap
+# ---------------------------------------------------------------------
+
+if not DB_PATH.exists():
+    st.info("Preparing the analytical warehouse for first use...")
+
+    result = subprocess.run(
+        [sys.executable, str(ROOT / "scripts" / "setup_project.py")],
+        cwd=ROOT,
+        capture_output=True,
+        text=True,
+    )
+
+    if result.returncode != 0:
+        st.error("Warehouse setup failed.")
+        st.code(result.stdout + "\n" + result.stderr)
+        st.stop()
+
+    st.cache_data.clear()
+    st.rerun()
 
 
 @st.cache_data
@@ -496,6 +522,8 @@ with tabs[4]:
                 width="stretch",
                 hide_index=True,
             )
+
+
 
 
 

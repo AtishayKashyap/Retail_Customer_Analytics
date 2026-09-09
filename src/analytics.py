@@ -321,3 +321,58 @@ def get_segment_recommendations(state: str | None = None) -> pd.DataFrame:
     ).fillna("Investigate segment behavior before taking action")
 
     return segments
+
+def get_customer_detail(customer_unique_id: str) -> pd.DataFrame:
+    sql = """
+    SELECT
+        order_id,
+        order_status,
+        order_purchase_timestamp,
+        order_delivered_customer_date,
+        order_value,
+        item_count,
+        product_count,
+        review_score
+    FROM gold.customer_order_history
+    WHERE customer_unique_id = ?
+    ORDER BY order_purchase_timestamp DESC
+    """
+
+    con = connect(DB_PATH, read_only=True)
+
+    try:
+        return query_df(con, sql, (customer_unique_id,))
+    finally:
+        con.close()
+
+
+def get_customer_profile(customer_unique_id: str) -> pd.DataFrame:
+    sql = """
+    SELECT
+        c.customer_unique_id,
+        c.customer_state,
+        c.customer_city,
+        c.first_order_date,
+        c.last_order_date,
+        c.order_count,
+        c.total_revenue,
+        c.avg_order_value,
+        c.total_items,
+        c.avg_review_score,
+        s.recency_days,
+        s.frequency,
+        s.monetary_value,
+        s.segment,
+        s.rfm_score
+    FROM gold.customer_360 c
+    JOIN gold.customer_segments s
+        ON c.customer_unique_id = s.customer_unique_id
+    WHERE c.customer_unique_id = ?
+    """
+
+    con = connect(DB_PATH, read_only=True)
+
+    try:
+        return query_df(con, sql, (customer_unique_id,))
+    finally:
+        con.close()
