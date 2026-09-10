@@ -92,3 +92,67 @@ The current observed median result is:
 - Median speedup: 1.57x
 
 This result is workload-specific and depends on the dataset size, hardware, DuckDB version, and execution environment.
+
+## Hypothesis-Driven Statistical Analysis
+
+### Question
+
+Is delivery timeliness associated with customer review scores?
+
+### Hypotheses
+
+**Null hypothesis (H₀):** Review-score distributions do not differ between on-time and late deliveries.
+
+**Alternative hypothesis (H₁):** Review-score distributions differ between on-time and late deliveries.
+
+### Study design
+
+This is an **observational analysis**, not a randomized experiment. Orders were classified using the recorded customer delivery date and estimated delivery date.
+
+Orders with invalid delivery chronology were excluded from this statistical analysis while remaining preserved in the underlying analytical warehouse for auditability.
+
+### Statistical method
+
+A two-sided **Mann–Whitney U test** was used to compare review-score distributions between on-time and late deliveries. This non-parametric test was selected because review scores are discrete ordinal ratings on a 1–5 scale.
+
+The significance threshold was:
+
+`α = 0.05`
+
+Effect magnitude was reported using the **rank-biserial correlation**.
+
+A bootstrap procedure with 5,000 iterations and a fixed random seed was also used to quantify uncertainty around the difference in median review scores.
+
+### Observed results
+
+The analysis included:
+
+- 88,140 on-time orders
+- 7,660 late orders
+- On-time mean review score: 4.295
+- Late mean review score: 2.566
+- On-time median review score: 5.0
+- Late median review score: 2.0
+- Mann–Whitney U statistic: 524,613,062
+- p-value: below 0.001 at the reported precision
+- Rank-biserial effect size: 0.554
+- Median review-score difference: 3.0 points
+- Bootstrap 95% CI for median difference: [3.0, 3.0]
+
+### Interpretation
+
+The analysis provides strong statistical evidence that review-score distributions differ between on-time and late deliveries. The observed difference is also substantial in magnitude, not merely statistically significant.
+
+The result should be interpreted as an **association**, not a causal effect. Other factors may influence customer review scores, and the observational design does not establish that delivery lateness itself caused the difference.
+
+### Reproducibility
+
+The analysis is implemented in:
+
+`scripts/statistical_analysis.py`
+
+and the reproducible result artifact is written to:
+
+`artifacts/statistical_analysis.json`
+
+The bootstrap uses a fixed random seed of 42 so that the reported interval can be reproduced.

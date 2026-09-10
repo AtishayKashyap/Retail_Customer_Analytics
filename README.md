@@ -562,3 +562,26 @@ The goal of the project is to demonstrate an end-to-end analytics workflow that 
     Interactive decision support
 
 The emphasis is on reproducibility, measurable analytical work, and clear separation between data preparation, analysis, and presentation.
+
+## Statistical Analysis
+
+The project includes a reproducible hypothesis-driven analysis of the relationship between delivery timeliness and customer review scores.
+
+- **Question:** Are review-score distributions different for on-time versus late deliveries?
+- **Method:** Two-sided Mann–Whitney U test
+- **Effect size:** Rank-biserial correlation
+- **Uncertainty:** 5,000-iteration bootstrap
+- **On-time orders:** 88,140
+- **Late orders:** 7,660
+- **Mean review score:** 4.295 on-time vs 2.566 late
+- **Median review score:** 5.0 on-time vs 2.0 late
+- **Rank-biserial effect size:** 0.554
+- **Statistical conclusion:** p < 0.001 at the reported precision
+
+The analysis is observational rather than randomized, so the result is interpreted as an association rather than a causal effect.
+
+Implementation: `scripts/statistical_analysis.py`
+
+Result artifact: `artifacts/statistical_analysis.json`
+
+The methodology, assumptions, and limitations are documented in `docs/methodology.md`.

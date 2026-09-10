@@ -678,3 +678,42 @@ SELECT
     'Balance retention investment with acquisition and development of secondary segments.'
 FROM top_segment;
 
+
+-- ============================================================
+-- Statistical analysis: delivery timeliness vs review score
+-- ============================================================
+
+CREATE OR REPLACE TABLE gold.delivery_review_analysis AS
+SELECT
+    o.order_id,
+    o.customer_id,
+    o.order_status,
+    CAST(o.order_purchase_timestamp AS DATE) AS purchase_date,
+    CAST(o.order_delivered_carrier_date AS DATE) AS carrier_delivery_date,
+    CAST(o.order_delivered_customer_date AS DATE) AS customer_delivery_date,
+    CAST(o.order_estimated_delivery_date AS DATE) AS estimated_delivery_date,
+    r.avg_review_score AS review_score,
+
+    CASE
+        WHEN o.order_delivered_customer_date <= o.order_estimated_delivery_date
+            THEN 'On-Time'
+        ELSE 'Late'
+    END AS delivery_group,
+
+    DATE_DIFF(
+        'day',
+        o.order_estimated_delivery_date,
+        o.order_delivered_customer_date
+    ) AS delivery_delay_days
+
+FROM silver.orders o
+INNER JOIN silver.order_review_summary r
+    ON o.order_id = r.order_id
+
+WHERE o.order_delivered_customer_date IS NOT NULL
+  AND o.order_estimated_delivery_date IS NOT NULL
+  AND o.order_delivered_carrier_date IS NOT NULL
+  AND o.order_delivered_carrier_date <= o.order_delivered_customer_date
+  AND r.avg_review_score IS NOT NULL
+  AND o.order_status NOT IN ('canceled', 'unavailable');
+

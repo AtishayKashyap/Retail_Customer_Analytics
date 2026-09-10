@@ -5,3 +5,5 @@ plotly==6.5.2
 pyarrow>=18,<24
 requests>=2.31,<3
 pytest>=8,<9
+
+scipy>=1.12,<2
