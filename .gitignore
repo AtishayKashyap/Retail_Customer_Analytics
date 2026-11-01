@@ -1,21 +1,18 @@
-﻿.venv/
+.venv/
 __pycache__/
 *.py[cod]
+*.egg-info/
 .pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
 
 .streamlit/secrets.toml
 
 data/raw/*
 !data/raw/.gitkeep
-
 data/warehouse/*
 !data/warehouse/.gitkeep
-
-artifacts/*
-!artifacts/.gitkeep
-
-*.duckdb
-*.duckdb.wal
 
 .DS_Store
 Thumbs.db

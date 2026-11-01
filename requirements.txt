@@ -1,9 +1,10 @@
-﻿streamlit==1.63.0
+# Runtime dependencies for Streamlit Community Cloud (pinned to the versions tested in CI).
 duckdb==1.5.5
-pandas==2.2.3
+filelock==3.20.0
+numpy==2.3.4
+pandas==2.3.3
 plotly==6.5.2
-pyarrow>=18,<24
-requests>=2.31,<3
-pytest>=8,<9
-
-scipy>=1.12,<2
+pyarrow==23.0.1
+requests==2.32.5
+scipy==1.16.3
+streamlit==1.63.0
