@@ -11,7 +11,7 @@ requires-python = ">=3.11"
 license = { text = "MIT" }
 dependencies = [
     "duckdb>=1.5,<2",
-    "filelock>=3.13,<4",
+    "filelock>=3.13,<5",
     "numpy>=2.0,<3",
     "pandas>=2.2,<4",
     "plotly>=6,<7",
