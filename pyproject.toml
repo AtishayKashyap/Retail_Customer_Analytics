@@ -22,7 +22,7 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-dev = ["pytest>=8,<9", "pytest-cov>=5", "ruff>=0.6", "mypy>=1.11", "pandas-stubs", "types-requests"]
+dev = ["pytest>=8,<10", "pytest-cov>=5", "ruff>=0.6", "mypy>=1.11", "pandas-stubs", "types-requests"]
 
 [project.scripts]
 retail = "retail_analytics.cli:main"
