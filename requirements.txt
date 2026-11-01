@@ -1,5 +1,5 @@
 # Runtime dependencies for Streamlit Community Cloud (pinned to the versions tested in CI).
-duckdb==1.5.5
+duckdb==2.0.0
 filelock==3.20.0
 numpy==2.3.4
 pandas==2.3.3
