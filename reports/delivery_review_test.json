@@ -1,0 +1,33 @@
+{
+  "n_on_time": 89420,
+  "n_late": 6380,
+  "mean_on_time": 4.290977037202714,
+  "mean_late": 2.271394984326019,
+  "median_on_time": 5.0,
+  "median_late": 1.0,
+  "u_statistic": 467311942.5,
+  "p_value": 0.0,
+  "rank_biserial": {
+    "estimate": 0.6382551100824612,
+    "low": 0.6265548078824243,
+    "high": 0.6502560578044227
+  },
+  "low_review_share_on_time": {
+    "estimate": 0.09221650637441288,
+    "low": 0.09033759993722999,
+    "high": 0.094130447841918
+  },
+  "low_review_share_late": {
+    "estimate": 0.6236677115987461,
+    "low": 0.611708876588768,
+    "high": 0.6354777132065726
+  },
+  "low_review_share_difference": {
+    "estimate": 0.5314512052243332,
+    "low": 0.5193401810423364,
+    "high": 0.5434097347065293
+  },
+  "alpha": 0.05,
+  "significant": true,
+  "interpretation": "On-time orders receive systematically higher review scores than late orders (p < 1e-300); the effect is large (rank-biserial r=0.64)."
+}

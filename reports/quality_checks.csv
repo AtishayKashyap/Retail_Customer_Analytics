@@ -1,0 +1,29 @@
+check_group,check_name,severity,failed_rows,description,passed
+chronology,carrier hand-off before customer delivery,warning,23,Source timestamps out of order; these orders are excluded from the delivery analysis,False
+completeness,delivered orders have a delivery date,warning,8,Delivered status without a delivery timestamp,False
+completeness,valid orders have line items,warning,8,Valid orders with no line items carry no revenue,False
+reconciliation,payments = items + freight,warning,366,"Payment total differs from line total (vouchers, interest on instalments)",False
+referential_integrity,products -> category translation,warning,2,Categories without an English name (shown in Portuguese),False
+uniqueness,reviews.review_id,warning,814,Olist reuses a review id across orders of one purchase,False
+chronology,approved after purchase,error,0,Payment approval follows purchase,True
+chronology,delivered after purchase,error,0,Nothing is delivered before it is bought,True
+completeness,customers.customer_unique_id,error,0,Every customer row maps to a person,True
+completeness,orders required fields,error,0,"Every order has an id, customer, status and purchase time",True
+referential_integrity,order_items -> orders,error,0,Every line belongs to an order,True
+referential_integrity,order_items -> products,error,0,Every line has a product,True
+referential_integrity,order_items -> sellers,error,0,Every line has a seller,True
+referential_integrity,orders -> customers,error,0,Every order has a customer,True
+referential_integrity,payments -> orders,error,0,Every payment belongs to an order,True
+referential_integrity,reviews -> orders,error,0,Every review belongs to an order,True
+type_conversion,order_items money,error,0,Prices and freight parse as decimals,True
+type_conversion,orders timestamps,error,0,Order timestamps parse,True
+type_conversion,reviews.review_score,error,0,Review scores parse as integers,True
+uniqueness,customers.customer_id,error,0,Customer ids are unique,True
+uniqueness,"order_items.(order_id, order_item_id)",error,0,Order lines are unique,True
+uniqueness,orders.order_id,error,0,Order ids are unique,True
+uniqueness,products.product_id,error,0,Product ids are unique,True
+uniqueness,sellers.seller_id,error,0,Seller ids are unique,True
+validity,known order status,error,0,Order status is one of the documented values,True
+validity,non-negative money,error,0,Prices and freight are not negative,True
+validity,non-negative payments,error,0,Payments are not negative,True
+validity,review score in 1..5,error,0,Review scores are on the 1-5 scale,True
